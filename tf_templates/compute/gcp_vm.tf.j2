@@ -1,0 +1,65 @@
+# ── SSH Key ───────────────────────────────────────────────────────────────────
+resource "tls_private_key" "range" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+resource "local_sensitive_file" "private_key" {
+  content         = tls_private_key.range.private_key_pem
+  filename        = "${path.module}/${var.target_name}.pem"
+  file_permission = "0600"
+}
+
+# ── VPC Network ───────────────────────────────────────────────────────────────
+resource "google_compute_network" "range" {
+  name                    = "${var.target_name}-vpc"
+  auto_create_subnetworks = false
+}
+
+resource "google_compute_subnetwork" "public" {
+  name          = "${var.target_name}-subnet"
+  ip_cidr_range = "10.0.1.0/24"
+  region        = var.region
+  network       = google_compute_network.range.id
+}
+
+# ── Firewall — intentionally permissive for cyber range ───────────────────────
+resource "google_compute_firewall" "target" {
+  name    = "${var.target_name}-fw"
+  network = google_compute_network.range.name
+
+  {% for port in open_ports %}
+  allow {
+    protocol = "tcp"
+    ports    = ["{{ port }}"]
+  }
+  {% endfor %}
+
+  source_ranges = ["0.0.0.0/0"]
+}
+
+# ── Compute Instance ──────────────────────────────────────────────────────────
+resource "google_compute_instance" "target" {
+  name         = var.target_name
+  machine_type = var.instance_type
+  zone         = "${var.region}-a"
+
+  boot_disk {
+    initialize_params {
+      image = "ubuntu-os-cloud/ubuntu-2204-lts"
+      size  = 30
+    }
+  }
+
+  network_interface {
+    subnetwork = google_compute_subnetwork.public.id
+    access_config {}
+  }
+
+  metadata = {
+    ssh-keys       = "ubuntu:${tls_private_key.range.public_key_openssh}"
+    startup-script = file("${path.module}/scripts/install.sh")
+  }
+
+  tags = ["cyber-range", var.target_name]
+}

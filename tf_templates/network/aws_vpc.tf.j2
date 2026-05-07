@@ -1,0 +1,59 @@
+# ── VPC ─────────────────────────────────────────────────────────────────────
+resource "aws_vpc" "range" {
+  cidr_block           = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support   = true
+  tags = { Name = "${var.target_name}-vpc" }
+}
+
+resource "aws_internet_gateway" "range" {
+  vpc_id = aws_vpc.range.id
+  tags   = { Name = "${var.target_name}-igw" }
+}
+
+resource "aws_subnet" "public" {
+  vpc_id                  = aws_vpc.range.id
+  cidr_block              = "10.0.1.0/24"
+  map_public_ip_on_launch = true
+  availability_zone       = "${var.region}a"
+  tags                    = { Name = "${var.target_name}-public" }
+}
+
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.range.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.range.id
+  }
+  tags = { Name = "${var.target_name}-rt" }
+}
+
+resource "aws_route_table_association" "public" {
+  subnet_id      = aws_subnet.public.id
+  route_table_id = aws_route_table.public.id
+}
+
+# ── Security Group — intentionally permissive for cyber range ────────────────
+resource "aws_security_group" "target" {
+  name        = "${var.target_name}-sg"
+  description = "Cyber range target — controlled open access"
+  vpc_id      = aws_vpc.range.id
+
+  {% for port in open_ports %}
+  ingress {
+    from_port   = {{ port }}
+    to_port     = {{ port }}
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  {% endfor %}
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = { Name = "${var.target_name}-sg" }
+}
