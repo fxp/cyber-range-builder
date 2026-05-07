@@ -23,6 +23,9 @@ override.tf.json
 *_override.tf
 *_override.tf.json
 
+# Java
+points-mall/target/
+
 # OS
 .DS_Store
 Thumbs.db

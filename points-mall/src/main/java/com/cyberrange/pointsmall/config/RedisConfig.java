@@ -36,8 +36,10 @@ public class RedisConfig {
         config.setMaxTotal(maxActive);
         config.setMaxIdle(maxIdle);
         config.setMinIdle(minIdle);
-        config.setTestOnBorrow(true);
-        config.setTestOnReturn(true);
+        config.setTestOnBorrow(false);
+        config.setTestOnReturn(false);
+        config.setMinEvictableIdleTime(java.time.Duration.ofSeconds(60));
+        config.setNumTestsPerEvictionRun(3);
 
         if (password != null && !password.isEmpty()) {
             return new JedisPool(config, host, port, timeout, password);
