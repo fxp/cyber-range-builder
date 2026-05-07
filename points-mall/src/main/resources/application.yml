@@ -80,6 +80,15 @@ kafka:
     order-created: order.created
     order-completed: order.completed
 
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+    try-it-out-enabled: true
+  api-docs:
+    path: /v3/api-docs
+
 management:
   endpoints:
     web:
