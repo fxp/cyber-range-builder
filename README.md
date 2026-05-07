@@ -106,6 +106,10 @@ cyber-range-builder/
 2. Describe the app in your build request — the agent will reference the script and generate appropriate Terraform
 3. If you need a new cloud provider, add a template to `tf_templates/providers/`
 
+## Detailed workflow
+
+See [docs/workflow.md](docs/workflow.md) for a step-by-step walkthrough of every phase: CLI → agent loop → tool call sequence → Terraform execution → final report.
+
 ## Architecture
 
 The agent is built on the Anthropic Claude API with tool use:
