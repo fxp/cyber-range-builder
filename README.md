@@ -6,6 +6,8 @@ Describe what you want in plain language — the agent writes Terraform, provisi
 > **For authorized security research only.** The generated infrastructure is intentionally vulnerable.
 > Always deploy in isolated, private cloud environments and destroy when done.
 
+English | [中文](README.zh.md)
+
 ## How it works
 
 ```
