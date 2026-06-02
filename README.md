@@ -8,6 +8,10 @@ Describe what you want in plain language — the agent writes Terraform, provisi
 
 English | [中文](README.zh.md)
 
+## Architecture
+
+![Cyber Range Builder Architecture](docs/architecture.svg)
+
 ## How it works
 
 ```

@@ -1,0 +1,319 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 710" width="1000" height="710" role="img" aria-label="Cyber Range Builder Architecture Diagram">
+  <defs>
+    <marker id="arr-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#58a6ff"/>
+    </marker>
+    <marker id="arr-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#3fb950"/>
+    </marker>
+    <marker id="arr-red" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#f85149"/>
+    </marker>
+    <marker id="arr-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#e3b341"/>
+    </marker>
+    <!-- Loop arrow for agent -->
+    <marker id="arr-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0,10 3.5,0 7" fill="#a371f7"/>
+    </marker>
+  </defs>
+
+  <!-- ═══ Background ═══ -->
+  <rect width="1000" height="710" fill="#0d1117"/>
+
+  <!-- Subtle grid -->
+  <line x1="500" y1="0" x2="500" y2="710" stroke="#161b22" stroke-width="1"/>
+
+  <!-- ═══ Title ═══ -->
+  <text x="500" y="34" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="17" font-weight="700"
+        fill="#f0f6fc" letter-spacing="0.3">
+    Cyber Range Builder — Architecture Overview
+  </text>
+
+  <!-- ═══ USER ═══ -->
+  <rect x="375" y="50" width="250" height="54" rx="8"
+        fill="#0d1117" stroke="#1f6feb" stroke-width="1.5"/>
+  <!-- terminal blink -->
+  <rect x="390" y="63" width="7" height="12" rx="1" fill="#388bfd" opacity="0.9"/>
+  <text x="408" y="74" font-family="monospace" font-size="10" fill="#58a6ff">$ python main.py build</text>
+  <text x="408" y="88" font-family="monospace" font-size="9.5" fill="#8b949e">  "DVWA on AWS t3.small in us-east-1"</text>
+
+  <!-- Arrow: User → CLI -->
+  <line x1="500" y1="104" x2="500" y2="126" stroke="#58a6ff" stroke-width="1.5"
+        marker-end="url(#arr-blue)" stroke-dasharray="none"/>
+
+  <!-- ═══ CLI ═══ -->
+  <rect x="375" y="126" width="250" height="54" rx="8"
+        fill="#161b22" stroke="#1f6feb" stroke-width="1.5"/>
+  <text x="500" y="149" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#58a6ff">CLI · main.py</text>
+  <text x="500" y="168" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="10" fill="#8b949e">
+    build · list · info · destroy
+  </text>
+
+  <!-- Arrow: CLI → Agent -->
+  <line x1="500" y1="180" x2="500" y2="202" stroke="#58a6ff" stroke-width="1.5"
+        marker-end="url(#arr-blue)"/>
+
+  <!-- ═══ AGENT BOX ═══ -->
+  <rect x="40" y="202" width="920" height="205" rx="10"
+        fill="#161b22" stroke="#6e40c9" stroke-width="2"/>
+  <!-- Header band -->
+  <rect x="40" y="202" width="920" height="32" rx="10" fill="#21262d"/>
+  <rect x="40" y="224" width="920" height="10" fill="#21262d"/>
+  <!-- Loop indicator (top-right) -->
+  <text x="945" y="222" text-anchor="end" font-family="monospace" font-size="11" fill="#a371f7" opacity="0.7">↻ loop</text>
+
+  <text x="500" y="222" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="700"
+        fill="#a371f7">
+    🤖  Claude Agent Loop  (builder.py)  ·  claude-sonnet-4-6  ·  tool-use driven
+  </text>
+
+  <text x="500" y="248" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="10" fill="#6e7681">
+    Interprets natural language → calls tools → receives results → loops until task complete
+  </text>
+
+  <!-- ── Tool boxes (5 × w=160, gap=10, total=840, start x=80) ── -->
+
+  <!-- Tool 1: create_workspace -->
+  <rect x="80" y="260" width="160" height="130" rx="6"
+        fill="#0d1117" stroke="#a371f7" stroke-width="1"/>
+  <rect x="80" y="260" width="160" height="26" rx="6" fill="#1f1235"/>
+  <rect x="80" y="276" width="160" height="10" fill="#1f1235"/>
+  <text x="160" y="278" text-anchor="middle" font-family="monospace" font-size="9.5"
+        fill="#d2a8ff" font-weight="600">create_workspace</text>
+  <text x="160" y="302" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#8b949e">Creates isolated dir</text>
+  <text x="160" y="318" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">workspaces/</text>
+  <text x="160" y="332" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">  &#x3C;id&#x3E;/</text>
+  <text x="160" y="380" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="8.5" fill="#3fb950">→ workspace_id</text>
+
+  <!-- Tool 2: write_file -->
+  <rect x="250" y="260" width="160" height="130" rx="6"
+        fill="#0d1117" stroke="#a371f7" stroke-width="1"/>
+  <rect x="250" y="260" width="160" height="26" rx="6" fill="#1f1235"/>
+  <rect x="250" y="276" width="160" height="10" fill="#1f1235"/>
+  <text x="330" y="278" text-anchor="middle" font-family="monospace" font-size="9.5"
+        fill="#d2a8ff" font-weight="600">write_file</text>
+  <text x="330" y="302" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#8b949e">Generates Terraform</text>
+  <text x="330" y="316" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">provider.tf</text>
+  <text x="330" y="329" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">network.tf</text>
+  <text x="330" y="342" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">compute.tf</text>
+  <text x="330" y="355" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">scripts/install.sh</text>
+  <text x="330" y="380" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="8.5" fill="#3fb950">→ N bytes written</text>
+
+  <!-- Tool 3: run_terraform -->
+  <rect x="420" y="260" width="160" height="130" rx="6"
+        fill="#0d1117" stroke="#a371f7" stroke-width="1"/>
+  <rect x="420" y="260" width="160" height="26" rx="6" fill="#1f1235"/>
+  <rect x="420" y="276" width="160" height="10" fill="#1f1235"/>
+  <text x="500" y="278" text-anchor="middle" font-family="monospace" font-size="9.5"
+        fill="#d2a8ff" font-weight="600">run_terraform</text>
+  <text x="500" y="302" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#8b949e">Executes commands</text>
+  <text x="500" y="316" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">init</text>
+  <text x="500" y="329" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">validate</text>
+  <text x="500" y="342" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">plan</text>
+  <text x="500" y="355" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">apply -auto-approve</text>
+  <text x="500" y="380" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="8.5" fill="#3fb950">→ cloud resources</text>
+
+  <!-- Tool 4: get_outputs -->
+  <rect x="590" y="260" width="160" height="130" rx="6"
+        fill="#0d1117" stroke="#a371f7" stroke-width="1"/>
+  <rect x="590" y="260" width="160" height="26" rx="6" fill="#1f1235"/>
+  <rect x="590" y="276" width="160" height="10" fill="#1f1235"/>
+  <text x="670" y="278" text-anchor="middle" font-family="monospace" font-size="9.5"
+        fill="#d2a8ff" font-weight="600">get_tf_outputs</text>
+  <text x="670" y="302" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#8b949e">Reads terraform output</text>
+  <text x="670" y="316" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">public_ip</text>
+  <text x="670" y="329" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">ssh_command</text>
+  <text x="670" y="342" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">app_urls</text>
+  <text x="670" y="355" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">default_creds</text>
+  <text x="670" y="380" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="8.5" fill="#3fb950">→ JSON</text>
+
+  <!-- Tool 5: add_security_note -->
+  <rect x="760" y="260" width="160" height="130" rx="6"
+        fill="#0d1117" stroke="#a371f7" stroke-width="1"/>
+  <rect x="760" y="260" width="160" height="26" rx="6" fill="#1f1235"/>
+  <rect x="760" y="276" width="160" height="10" fill="#1f1235"/>
+  <text x="840" y="278" text-anchor="middle" font-family="monospace" font-size="9.5"
+        fill="#d2a8ff" font-weight="600">add_security_note</text>
+  <text x="840" y="302" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#8b949e">Records findings</text>
+  <text x="840" y="316" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">CVEs</text>
+  <text x="840" y="329" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">attack vectors</text>
+  <text x="840" y="342" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">suggested tools</text>
+  <text x="840" y="355" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#79c0ff">default creds</text>
+  <text x="840" y="380" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="8.5" fill="#3fb950">→ .crb_state.json</text>
+
+  <!-- ═══ TERRAFORM EXECUTION ═══ -->
+  <!-- Arrow: Agent → Terraform -->
+  <line x1="500" y1="407" x2="500" y2="430" stroke="#3fb950" stroke-width="1.5"
+        marker-end="url(#arr-green)"/>
+
+  <rect x="300" y="430" width="400" height="70" rx="8"
+        fill="#161b22" stroke="#2ea043" stroke-width="1.5"/>
+  <!-- small terraform icon T -->
+  <text x="325" y="458" font-family="monospace" font-size="16" fill="#2ea043" font-weight="700">T</text>
+  <text x="500" y="456" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="12" font-weight="600"
+        fill="#3fb950">Terraform ≥ 1.5</text>
+  <text x="500" y="472" text-anchor="middle"
+        font-family="monospace" font-size="10" fill="#8b949e">
+    init → validate → plan → apply -auto-approve
+  </text>
+  <text x="500" y="488" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="9" fill="#56d364">
+    VPC · Subnets · Security Groups · VM · SSH Key Pair
+  </text>
+
+  <!-- ═══ CLOUD PROVIDERS ═══ -->
+  <!-- Arrows: Terraform → 3 providers (branching) -->
+  <!-- Left branch to AWS -->
+  <path d="M 390 500 Q 300 515 185 520" stroke="#3fb950" stroke-width="1.5" fill="none"
+        marker-end="url(#arr-green)"/>
+  <!-- Center arrow to GCP -->
+  <line x1="500" y1="500" x2="500" y2="520" stroke="#3fb950" stroke-width="1.5"
+        marker-end="url(#arr-green)"/>
+  <!-- Right branch to Azure -->
+  <path d="M 610 500 Q 700 515 815 520" stroke="#3fb950" stroke-width="1.5" fill="none"
+        marker-end="url(#arr-green)"/>
+
+  <!-- AWS -->
+  <rect x="55" y="520" width="260" height="70" rx="8"
+        fill="#161b22" stroke="#ec7211" stroke-width="1.5"/>
+  <text x="185" y="544" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="13" font-weight="700"
+        fill="#ec7211">☁  AWS</text>
+  <text x="185" y="561" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#8b949e">hashicorp/aws  ~5.0</text>
+  <text x="185" y="576" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="9" fill="#6e7681">
+    EC2 · VPC · Key Pairs · t3.small …
+  </text>
+
+  <!-- GCP -->
+  <rect x="370" y="520" width="260" height="70" rx="8"
+        fill="#161b22" stroke="#4285f4" stroke-width="1.5"/>
+  <text x="500" y="544" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="13" font-weight="700"
+        fill="#4285f4">☁  GCP</text>
+  <text x="500" y="561" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#8b949e">hashicorp/google  ~5.0</text>
+  <text x="500" y="576" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="9" fill="#6e7681">
+    Compute Engine · VPC · e2-micro …
+  </text>
+
+  <!-- Azure -->
+  <rect x="685" y="520" width="260" height="70" rx="8"
+        fill="#161b22" stroke="#0078d4" stroke-width="1.5"/>
+  <text x="815" y="544" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="13" font-weight="700"
+        fill="#0078d4">☁  Azure</text>
+  <text x="815" y="561" text-anchor="middle" font-family="monospace" font-size="9"
+        fill="#8b949e">hashicorp/azurerm  ~3.0</text>
+  <text x="815" y="576" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="9" fill="#6e7681">
+    VM · VNet · NSG · Standard_B2s …
+  </text>
+
+  <!-- ═══ DEPLOYED TARGETS ═══ -->
+  <!-- Arrow: Cloud → Targets -->
+  <line x1="500" y1="590" x2="500" y2="612" stroke="#f85149" stroke-width="1.5"
+        marker-end="url(#arr-red)"/>
+
+  <!-- Targets box (left) -->
+  <rect x="40" y="612" width="555" height="80" rx="8"
+        fill="#161b22" stroke="#f85149" stroke-width="1.5"/>
+  <text x="317" y="633" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="700"
+        fill="#f85149">⚠  Vulnerable Target (Docker · Ubuntu 22.04)</text>
+  <!-- Small app pills -->
+  <!-- Row 1 -->
+  <rect x="56"  y="641" width="72" height="18" rx="9" fill="#2d1515" stroke="#f85149" stroke-width="0.8"/>
+  <text x="92"  y="654" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#ffa198">DVWA</text>
+
+  <rect x="136" y="641" width="82" height="18" rx="9" fill="#2d1515" stroke="#f85149" stroke-width="0.8"/>
+  <text x="177" y="654" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#ffa198">Juice Shop</text>
+
+  <rect x="226" y="641" width="68" height="18" rx="9" fill="#2d1515" stroke="#f85149" stroke-width="0.8"/>
+  <text x="260" y="654" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#ffa198">WebGoat</text>
+
+  <rect x="302" y="641" width="96" height="18" rx="9" fill="#2d1515" stroke="#f85149" stroke-width="0.8"/>
+  <text x="350" y="654" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#ffa198">Struts2 S2-045</text>
+
+  <rect x="406" y="641" width="80" height="18" rx="9" fill="#2d1515" stroke="#f85149" stroke-width="0.8"/>
+  <text x="446" y="654" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#ffa198">Log4Shell</text>
+
+  <rect x="494" y="641" width="86" height="18" rx="9" fill="#2d1515" stroke="#f85149" stroke-width="0.8"/>
+  <text x="537" y="654" text-anchor="middle" font-family="monospace" font-size="8.5" fill="#ffa198">WordPress 4.9</text>
+
+  <text x="317" y="682" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="9" fill="#6e7681">
+    Exposed on public IP · Security notes auto-generated
+  </text>
+
+  <!-- Report box (right) -->
+  <rect x="605" y="612" width="355" height="80" rx="8"
+        fill="#161b22" stroke="#e3b341" stroke-width="1.5"/>
+  <text x="782" y="633" text-anchor="middle"
+        font-family="'Segoe UI',system-ui,sans-serif" font-size="11" font-weight="700"
+        fill="#e3b341">📋  Final Report</text>
+
+  <text x="620" y="652" font-family="monospace" font-size="9" fill="#79c0ff">public_ip</text>
+  <text x="700" y="652" font-family="monospace" font-size="9" fill="#79c0ff">ssh_command</text>
+  <text x="620" y="666" font-family="monospace" font-size="9" fill="#79c0ff">app_url</text>
+  <text x="700" y="666" font-family="monospace" font-size="9" fill="#79c0ff">default_creds</text>
+  <text x="620" y="680" font-family="'Segoe UI',system-ui,sans-serif" font-size="9"
+        fill="#6e7681">CVEs · attack vectors · tools</text>
+
+  <!-- ═══ Labels / Legend ═══ -->
+  <!-- Left side label: Input -->
+  <text x="28" y="80" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#6e7681" transform="rotate(-90,28,80)">INPUT</text>
+  <!-- Left side label: Agent -->
+  <text x="28" y="305" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#6e7681" transform="rotate(-90,28,305)">AGENT</text>
+  <!-- Left side label: Infra -->
+  <text x="28" y="500" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#6e7681" transform="rotate(-90,28,500)">INFRA</text>
+  <!-- Left side label: Output -->
+  <text x="28" y="652" text-anchor="middle" font-family="'Segoe UI',system-ui,sans-serif"
+        font-size="9" fill="#6e7681" transform="rotate(-90,28,652)">OUTPUT</text>
+
+  <!-- Thin divider lines -->
+  <line x1="35" y1="118" x2="35" y2="200" stroke="#21262d" stroke-width="1"/>
+  <line x1="35" y1="405" x2="35" y2="520" stroke="#21262d" stroke-width="1"/>
+  <line x1="35" y1="608" x2="35" y2="700" stroke="#21262d" stroke-width="1"/>
+</svg>

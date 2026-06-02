@@ -11,6 +11,10 @@ AI 驱动的安全靶场自动构建工具，用于安全研究与培训。
 
 ---
 
+## 架构图
+
+![Cyber Range Builder 架构图](docs/architecture.svg)
+
 ## 工作原理
 
 ```
