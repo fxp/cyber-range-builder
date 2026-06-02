@@ -56,6 +56,26 @@ python main.py info <workspace_id>
 python main.py destroy <workspace_id>
 ```
 
+## Built-in targets
+
+### points-mall — Spring Boot security lab
+
+A purpose-built Spring Boot application that integrates five open-source libraries with known CVEs and common API misuse patterns, designed for dependency vulnerability research and kill-chain analysis.
+
+![points-mall architecture](./points-mall/architecture.svg)
+
+| Library | Version | Key findings |
+|---------|---------|-------------|
+| spring-kafka | 3.2.4 | CVE-2025-27817 SSRF (CRITICAL 9.8) · CVE-2025-27818 RCE (HIGH 8.8) |
+| jedis | 5.2.0 | No-auth Redis · O(N) KEYS scan |
+| bcprov-jdk18on | 1.83 | CVE-2025-14813 GOST CTR overflow (CRITICAL 9.3) · AES-GCM misuse |
+| opentracing-api | 0.33.0 | Exception message leakage via Span tags |
+| hanlp | portable-1.8.6 | Unbounded TextRank CPU exhaustion |
+
+See [`points-mall/ANALYSIS.md`](./points-mall/ANALYSIS.md) for setup instructions and full security analysis.
+
+---
+
 ## Example requests
 
 ```
@@ -89,6 +109,11 @@ cyber-range-builder/
 │   ├── webgoat.sh
 │   ├── mutillidae.sh
 │   └── log4shell_cve_2021_44228.sh
+├── points-mall/             # Built-in Spring Boot target (5-library security lab)
+│   ├── ANALYSIS.md          # Setup guide + security analysis reference
+│   ├── architecture.svg     # System architecture diagram
+│   ├── pom.xml
+│   └── src/
 └── workspaces/              # Runtime-generated (gitignored)
     └── <workspace_id>/
         ├── provider.tf

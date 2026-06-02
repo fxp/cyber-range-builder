@@ -1,5 +1,13 @@
 # 积分商城 — 分析 Agent 参考文档
 
+## 系统架构
+
+> 完整架构图展示了 points-mall 在 Cyber Range Builder 生态中的位置，以及内部分层结构和5个目标依赖库的安全分析重点。
+
+![Architecture](./architecture.svg)
+
+---
+
 ## 概述
 
 本项目是一个用于 **Cyber Range 扫描测试**的目标系统，基于 Spring Boot 构建的积分商城后端。包含用户管理、积分体系、商品目录、订单兑换等完整业务模块，并集成了五个指定的开源依赖库。
